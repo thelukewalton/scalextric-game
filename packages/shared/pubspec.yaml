@@ -1,0 +1,8 @@
+name: scalextric_shared
+description: Shared code for the scalextric project
+version: 1.0.0
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.2

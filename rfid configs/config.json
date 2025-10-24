@@ -1,0 +1,20 @@
+{
+    "antennas": [
+        1
+    ],
+"environment":"DEMO",
+    "filter": {
+        "match": "prefix",
+        "operation": "include",
+        "value": ""
+    },
+    "reportFilter": {
+        "duration": 1,
+        "type": "PER_ANTENNA"
+    },
+ 
+    "transmitPower": [
+        21
+    ],
+    "type": "SIMPLE"
+}

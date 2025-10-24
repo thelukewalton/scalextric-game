@@ -1,0 +1,40 @@
+services:
+  db:
+    ports:
+      - 5432:5432
+    image: postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  dartbackend:
+    build: .
+    ports:
+      - 13000:3000
+      - 18080:8080
+
+    environment:
+      DB_HOST: db
+      MQTT_HOST: mosquitto
+      DB_NAME: ${POSTGRES_DB}
+      TABLE_NAME: ${TABLE_NAME}
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    volumes:
+      - ./docker/mosquitto/config:/mosquitto/config
+      - ./docker/mosquitto/data:/c/data
+      - ./docker/mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
+    external: true

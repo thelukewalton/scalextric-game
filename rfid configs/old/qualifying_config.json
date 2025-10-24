@@ -1,0 +1,13 @@
+{
+    "type":"CUSTOM",
+    "antennas":[1],
+    "query":[
+        {
+            "session":"S1"
+            
+        }
+    ],
+    "transmitPower":[
+        15
+    ]
+}

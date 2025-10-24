@@ -1,0 +1,21 @@
+name: dart_server
+description: Backend server for RFID Scalextric Game
+version: 1.0.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  postgres: ^3.5.6
+  scalextric_shared:
+    path: ../shared
+  shelf: ^1.4.2
+  shelf_router: ^1.1.4
+  mqtt_client: ^10.8.0
+  dotenv: ^4.2.0
+
+dev_dependencies:
+  lints: ^5.0.0

@@ -1,0 +1,24 @@
+{
+    "antennas": [
+        1
+    ],
+    "reportFilter": {
+        "duration": 1,
+        "type": "PER_ANTENNA"
+    },
+    "tagMetaData": [
+        "ANTENNA",
+        "RSSI",
+        "CHANNEL",
+        "PHASE"
+    ],
+    "transmitPower": [
+        12
+    ],
+    "query": {
+        "sel": "NOT_SL",
+        "session": "S0",
+        "tagPopulation": 50
+    },
+    "type": "SIMPLE"
+}

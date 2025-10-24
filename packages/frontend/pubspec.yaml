@@ -1,0 +1,58 @@
+name: scalextric
+description: "Scalextric RFID Frontend"
+publish_to: "none"
+version: 1.1.1
+
+resolution: workspace
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  audioplayers: ^6.5.1
+  collection: 1.19.1
+  confetti: ^0.8.0
+  device_info_plus: ^12.1.0
+  equatable: ^2.0.7
+  file_picker: ^10.3.3
+  flutter:
+    sdk: flutter
+  flutter_datawedge: ^3.2.0
+  flutter_svg: ^2.2.1
+  flutter_typeahead: ^5.2.0
+  fluttertoast: ^9.0.0
+  go_router: ^14.3.0
+  http: ^1.5.0
+  provider: ^6.1.5+1
+  scalextric_shared:
+    path: ../shared
+  shared_preferences: ^2.5.3
+  shimmer: ^3.0.0
+  web_socket_channel: ^3.0.3
+  zeta_flutter: ^1.4.1
+
+dev_dependencies:
+  zds_analysis: ^1.2.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: F1
+      fonts:
+        - asset: assets/F1-display-regular.ttf
+        - asset: assets/F1-display-bold.ttf
+          weight: 700
+        - asset: assets/F1-display-wide.ttf
+          weight: 800
+    - family: Titillium
+      fonts:
+        - asset: assets/Titillium-Regular.ttf
+        - asset: assets/Titillium-Bold.ttf
+          weight: 700
+        - asset: assets/Titillium-Light.ttf
+          weight: 300
+        - asset: assets/Titillium-SemiBold.ttf
+          weight: 600
+
+  assets:
+    - assets/

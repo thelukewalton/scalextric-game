@@ -1,0 +1,126 @@
+### Set up the database (only run once per device)
+GET http://localhost:13000/setup
+
+### Start RFID
+GET http://localhost:13000/start
+
+### Stop RFID
+GET http://localhost:13000/stop
+
+### Get all rows from the database
+GET http://localhost:13000/
+
+
+### Scan into system after storing this, required by websocket
+POST http://localhost:13000/scanUser
+Content-Type: application/json
+  
+  {
+    "name": "Marc",
+    "id": "Marc"
+  }
+### Scan into system after storing this, required by websocket
+POST http://localhost:13000/scanUser
+Content-Type: application/json
+  
+  {
+    "name": "Luke Walton",
+    "id": "Luke Walton"
+  }
+
+### Get individual leaderboard
+GET http://localhost:13000/getLeaderboard
+
+
+### Get individual overall time leaderboard
+GET http://localhost:13000/getOverallLeaderboard
+
+### DELETE ALL ENTRIES 
+GET http://localhost:13000/removeAllEntries
+
+### DELETE DB Structure 
+GET http://localhost:13000/removeTableFromDb
+
+
+### POST RFID data
+POST http://localhost:13000/rfid
+Content-Type: application/json
+
+[  
+  {
+    "timestamp":"2025-04-25T16:58:05",
+    "data":{
+      "idHex": "1002"
+    }
+  }
+]
+### POST RFID data
+POST http://localhost:13000/rfid
+Content-Type: application/json
+
+[  
+  {
+    "timestamp":"2025-04-25T16:53:46",
+    "data":{
+      "idHex": "10055"
+    }
+  }
+]
+
+
+### POST Status
+POST http://localhost:13000/status
+Content-Type: application/json
+
+  {
+    "status": 3
+  }
+
+
+### GET Status
+GET http://localhost:13000/status
+
+
+### POST fake lap
+POST http://localhost:13000/fakeLaps
+Content-Type: application/json
+
+  {
+    "cadence":3
+  }
+
+### POST remove lap
+POST http://localhost:13000/clearLapTimes
+Content-Type: application/json
+
+  {
+    "id": "a"
+  }
+
+
+### POST reset 
+POST http://localhost:13000/reset
+Content-Type: application/json
+
+
+### get all users
+GET http://localhost:13000/getAllUsers
+
+### POST add faster lap from race
+POST http://localhost:13000/fastestLap
+Content-Type: application/json
+
+  {
+    "userId": "a",
+    "lap": 200,
+    "carId": "10000fg"
+  }
+
+  
+###  delete user
+DELETE http://localhost:13000/user
+Content-Type: application/json
+
+  {
+    "id": "Daniel Eshkiardo"
+  }

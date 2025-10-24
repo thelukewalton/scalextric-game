@@ -1,0 +1,1 @@
+{"version":2,"entries":[{"package":"workspace","rootUri":"../","packageUri":"lib/"},{"package":"scalextric","rootUri":"../packages/frontend/","packageUri":"lib/"},{"package":"dart_server","rootUri":"../packages/backend/","packageUri":"lib/"},{"package":"scalextric_shared","rootUri":"../packages/shared/","packageUri":"lib/"}]}
