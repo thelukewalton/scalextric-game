@@ -24,6 +24,15 @@ class GameState with ChangeNotifier {
 
   final bool isEmulator;
 
+  Uint8List? _currentImageP1;
+  Uint8List? get currentImageP1 => _currentImageP1;
+  set currentImageP1(Uint8List? value) {
+    _currentImageP1 = value;
+    notifyListeners();
+  }
+
+  String? imageLapCount;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   set isLoading(bool value) {
@@ -50,6 +59,8 @@ class GameState with ChangeNotifier {
   void clear() {
     _loggedInUser = null;
     racers.clear();
+    currentImageP1 = null;
+    imageLapCount = null;
 
     notifyListeners();
   }
@@ -120,6 +131,8 @@ class GameSettings extends Equatable {
     required this.secondCarImage,
     required this.trackImage,
     required this.brandImage,
+    required this.passcode,
+    required this.useFSCamera,
   });
 
   GameSettings.fromObj(Map<String, dynamic> json)
@@ -148,6 +161,8 @@ class GameSettings extends Equatable {
           secondCarImage: ((json[secondCarImageKey] as String?).imageExists) ? (json[secondCarImageKey] as String) : '',
           trackImage: ((json[trackImageKey] as String?).imageExists) ? (json[trackImageKey] as String) : '',
           brandImage: ((json[brandImageKey] as String?).imageExists) ? (json[brandImageKey] as String) : '',
+          passcode: json[passcodeKey] as int? ?? defaultPasscode,
+          useFSCamera: json[useFSCameraKey] as bool? ?? defaultUseFSCamera,
         );
 
   final String serverUrl;
@@ -173,6 +188,8 @@ class GameSettings extends Equatable {
   final String secondCarImage;
   final String trackImage;
   final String brandImage;
+  final int passcode;
+  final bool useFSCamera;
 
   Uri get restUrl => Uri.parse('http://$serverUrl:$restPort');
   Uri get wsUrl => Uri.parse('ws://$serverUrl:$websocketPort');
@@ -235,6 +252,7 @@ class GameSettings extends Equatable {
         secondCarImageKey: secondCarImage,
         trackImageKey: trackImage,
         brandImageKey: brandImage,
+        passcodeKey: passcode,
       };
 
   @override
@@ -264,6 +282,8 @@ class GameSettings extends Equatable {
     String? secondCarImage,
     String? trackImage,
     String? brandImage,
+    int? passcode,
+    bool? useFSCamera,
   }) {
     return GameSettings(
       serverUrl: serverUrl ?? this.serverUrl,
@@ -289,6 +309,8 @@ class GameSettings extends Equatable {
       secondCarImage: secondCarImage ?? this.secondCarImage,
       trackImage: trackImage ?? this.trackImage,
       brandImage: brandImage ?? this.brandImage,
+      passcode: passcode ?? this.passcode,
+      useFSCamera: useFSCamera ?? this.useFSCamera,
     );
   }
 }

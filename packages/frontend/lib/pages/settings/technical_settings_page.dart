@@ -140,6 +140,18 @@ class _SettingsPageBodyState extends State<_SettingsPageBody> {
                                         ),
                                       ],
                                     ),
+                                    Row(
+                                      children: [
+                                        const Text('Use FS40 Camera', style: TextStyle(color: Colors.white)),
+                                        ZetaSwitch(
+                                          value: settings.useFSCamera,
+                                          onChanged: (value) {
+                                            settings = settings.copyWith(useFSCamera: value);
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                     Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 20),
                                       width: 200,
@@ -159,6 +171,7 @@ class _SettingsPageBodyState extends State<_SettingsPageBody> {
                                               ZetaDropdownItem(label: 'Finish Page', value: 'f'),
                                               ZetaDropdownItem(label: 'Race Page', value: 'rp'),
                                               ZetaDropdownItem(label: 'Qualifying Login Page', value: 'ql'),
+                                              ZetaDropdownItem(label: 'Maintenance', value: 'm'),
                                             ],
                                             onChange: (item) {
                                               switch (item.value) {
@@ -187,6 +200,9 @@ class _SettingsPageBodyState extends State<_SettingsPageBody> {
                                                   break;
                                                 case 'ql':
                                                   context.go(QualifyingLoginPage.name);
+                                                  break;
+                                                case 'm':
+                                                  context.go('/maintenance');
                                                   break;
                                                 default:
                                                   break;

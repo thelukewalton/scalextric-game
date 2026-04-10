@@ -70,37 +70,41 @@ class DataWedgeState with ChangeNotifier {
     }
   }
 
-  void listener({bool redirect = false}) {
-    fdw?.onScanResult.listen((ScanResult result) async {
-      if (isLoading) return;
-      isLoading = true;
-      clear();
+  Future<void> parseScanResult(ScanResult result, {required bool redirect}) async {
+    if (isLoading) return;
+    isLoading = true;
+    clear();
 
-      try {
-        final body = ScanUserBody.fromJsonString(result.data);
-        await restState.postUser(body);
-        if (redirect && restState.status == Status.qualifying) {
-          router.go(QualifyingScanPage.name);
-        } else if (restState.status == Status.race) {
-          router.go(RaceScanPage.name);
-          if (gameState.racers.length < 2) {
-            unawaited(initScanner());
-          }
-        }
-      } catch (e) {
-        unawaited(initScanner());
-        if (e is FormatException) {
-          unawaited(
-            Fluttertoast.showToast(
-              msg: 'Error with badge format',
-              backgroundColor: const ZetaPrimitivesDark().red,
-              textColor: Colors.white,
-            ),
-          );
-          rethrow;
+    try {
+      final body = ScanUserBody.fromJsonString(result.data);
+      await restState.postUser(body);
+      if (redirect && restState.status == Status.qualifying) {
+        router.go(QualifyingScanPage.name);
+      } else if (restState.status == Status.race) {
+        router.go(RaceScanPage.name);
+        if (gameState.racers.length < 2) {
+          unawaited(initScanner());
         }
       }
-      isLoading = false;
+    } catch (e) {
+      unawaited(initScanner());
+      if (e is FormatException) {
+        unawaited(
+          Fluttertoast.showToast(
+            msg: 'Error with badge format',
+            backgroundColor: const ZetaPrimitivesDark().red,
+            textColor: Colors.white,
+          ),
+        );
+        rethrow;
+      }
+    }
+    isLoading = false;
+  }
+
+  void listener({bool redirect = false}) {
+    fdw?.onScanResult.listen((ScanResult result) async {
+      unawaited(parseScanResult(result, redirect: redirect));
     });
   }
 

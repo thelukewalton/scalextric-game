@@ -34,7 +34,7 @@ class Dashboard extends StatelessWidget {
 
     return Consumer3<WebSocketState, GameState, RestState>(
       builder: (context, state, gameState, restState, _) => SizedBox(
-        height: 400,
+        height: 350,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(40),
           child: CustomPaint(

@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scalextric/components/card.dart';
 import 'package:scalextric/components/lap_row_item.dart';
+import 'package:scalextric/components/mv_image.dart';
 import 'package:scalextric/state/game_state.dart';
 import 'package:scalextric/state/ws_state.dart';
 import 'package:zeta_flutter/zeta_flutter.dart';
 
 class LapCounter extends StatelessWidget {
-  const LapCounter({super.key, this.index});
+  const LapCounter({
+    super.key,
+    this.index,
+    this.showImage = false,
+  });
   final int? index;
+  final bool showImage;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class LapCounter extends StatelessWidget {
           tag: 'lap-counter-$index',
           child: TranslucentCard(
             child: Padding(
-              padding: const EdgeInsets.all(24).copyWith(right: 120),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -42,6 +48,10 @@ class LapCounter extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (showImage && gameState.settings.useFSCamera)
+                    const Expanded(
+                      child: MVImage(size: 360),
+                    ),
                 ],
               ),
             ),

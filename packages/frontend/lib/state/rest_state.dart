@@ -502,4 +502,20 @@ class RestState with ChangeNotifier {
     }
     return false;
   }
+
+  Future<void> getLastImage() async {
+    try {
+      final response = await http.get(Uri.parse('${gameState.settings.restUrl}/lastImage'));
+      if (response.statusCode == 200) {
+        final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+        final imageData = decoded['image'] as String;
+        gameState.currentImageP1 = base64Decode(imageData);
+        notifyListeners();
+      } else {
+        throw Exception('Failed to get last image');
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

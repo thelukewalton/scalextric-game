@@ -17,6 +17,7 @@
       "version": "1.1.1",
       "dependencies": [
         "audioplayers",
+        "awesome_shake_widget",
         "collection",
         "confetti",
         "device_info_plus",
@@ -46,10 +47,12 @@
       "dependencies": [
         "dotenv",
         "mqtt_client",
+        "path",
         "postgres",
         "scalextric_shared",
         "shelf",
-        "shelf_router"
+        "shelf_router",
+        "watcher"
       ],
       "devDependencies": [
         "lints"
@@ -67,6 +70,19 @@
       "dependencies": []
     },
     {
+      "name": "path",
+      "version": "1.9.1",
+      "dependencies": []
+    },
+    {
+      "name": "watcher",
+      "version": "1.2.1",
+      "dependencies": [
+        "async",
+        "path"
+      ]
+    },
+    {
       "name": "dotenv",
       "version": "4.2.0",
       "dependencies": [
@@ -76,7 +92,7 @@
     },
     {
       "name": "mqtt_client",
-      "version": "10.11.1",
+      "version": "10.11.9",
       "dependencies": [
         "characters",
         "crypto",
@@ -110,7 +126,7 @@
     },
     {
       "name": "postgres",
-      "version": "3.5.6",
+      "version": "3.5.9",
       "dependencies": [
         "async",
         "buffer",
@@ -119,7 +135,6 @@
         "crypto",
         "meta",
         "pool",
-        "sasl_scram",
         "stack_trace",
         "stream_channel"
       ]
@@ -131,12 +146,13 @@
     },
     {
       "name": "zeta_flutter",
-      "version": "1.4.1",
+      "version": "1.4.4",
       "dependencies": [
         "audioplayers",
         "collection",
         "flutter",
         "flutter_slidable",
+        "flutter_svg",
         "http",
         "intl",
         "mask_text_input_formatter",
@@ -167,7 +183,7 @@
     },
     {
       "name": "shared_preferences",
-      "version": "2.5.3",
+      "version": "2.5.4",
       "dependencies": [
         "flutter",
         "shared_preferences_android",
@@ -189,7 +205,7 @@
     },
     {
       "name": "http",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "dependencies": [
         "async",
         "http_parser",
@@ -228,7 +244,7 @@
     },
     {
       "name": "flutter_svg",
-      "version": "2.2.1",
+      "version": "2.2.3",
       "dependencies": [
         "flutter",
         "http",
@@ -266,7 +282,7 @@
     },
     {
       "name": "file_picker",
-      "version": "10.3.3",
+      "version": "10.3.10",
       "dependencies": [
         "cross_file",
         "dbus",
@@ -282,7 +298,7 @@
     },
     {
       "name": "equatable",
-      "version": "2.0.7",
+      "version": "2.0.8",
       "dependencies": [
         "collection",
         "meta"
@@ -290,7 +306,7 @@
     },
     {
       "name": "device_info_plus",
-      "version": "12.1.0",
+      "version": "12.3.0",
       "dependencies": [
         "device_info_plus_platform_interface",
         "ffi",
@@ -317,6 +333,14 @@
       "dependencies": []
     },
     {
+      "name": "awesome_shake_widget",
+      "version": "1.1.0",
+      "dependencies": [
+        "flutter",
+        "vibration"
+      ]
+    },
+    {
       "name": "audioplayers",
       "version": "6.5.1",
       "dependencies": [
@@ -333,6 +357,14 @@
         "path_provider",
         "synchronized",
         "uuid"
+      ]
+    },
+    {
+      "name": "async",
+      "version": "2.13.0",
+      "dependencies": [
+        "collection",
+        "meta"
       ]
     },
     {
@@ -357,15 +389,10 @@
     },
     {
       "name": "crypto",
-      "version": "3.0.6",
+      "version": "3.0.7",
       "dependencies": [
         "typed_data"
       ]
-    },
-    {
-      "name": "path",
-      "version": "1.9.1",
-      "dependencies": []
     },
     {
       "name": "event_bus",
@@ -409,14 +436,6 @@
       ]
     },
     {
-      "name": "async",
-      "version": "2.13.0",
-      "dependencies": [
-        "collection",
-        "meta"
-      ]
-    },
-    {
       "name": "pool",
       "version": "1.5.2",
       "dependencies": [
@@ -430,23 +449,13 @@
       "dependencies": []
     },
     {
-      "name": "sasl_scram",
-      "version": "0.1.1",
-      "dependencies": [
-        "buffer",
-        "collection",
-        "crypto",
-        "saslprep"
-      ]
-    },
-    {
       "name": "buffer",
       "version": "1.2.3",
       "dependencies": []
     },
     {
       "name": "zeta_icons",
-      "version": "1.1.7",
+      "version": "1.9.1",
       "dependencies": [
         "flutter",
         "flutter_svg"
@@ -454,7 +463,7 @@
     },
     {
       "name": "zeta_flutter_utils",
-      "version": "1.1.3",
+      "version": "1.1.5",
       "dependencies": [
         "flutter",
         "web"
@@ -462,7 +471,7 @@
     },
     {
       "name": "zeta_flutter_theme",
-      "version": "1.2.2",
+      "version": "1.3.0",
       "dependencies": [
         "equatable",
         "flutter",
@@ -471,7 +480,7 @@
     },
     {
       "name": "record",
-      "version": "6.1.1",
+      "version": "6.2.0",
       "dependencies": [
         "flutter",
         "record_android",
@@ -558,7 +567,7 @@
     },
     {
       "name": "shared_preferences_foundation",
-      "version": "2.5.4",
+      "version": "2.5.6",
       "dependencies": [
         "flutter",
         "shared_preferences_platform_interface"
@@ -566,7 +575,7 @@
     },
     {
       "name": "shared_preferences_android",
-      "version": "2.4.13",
+      "version": "2.4.20",
       "dependencies": [
         "flutter",
         "shared_preferences_platform_interface"
@@ -617,7 +626,7 @@
     },
     {
       "name": "vector_graphics_compiler",
-      "version": "1.1.19",
+      "version": "1.1.20",
       "dependencies": [
         "args",
         "meta",
@@ -643,12 +652,11 @@
     },
     {
       "name": "uuid",
-      "version": "4.5.1",
+      "version": "4.5.2",
       "dependencies": [
         "crypto",
         "fixnum",
-        "meta",
-        "sprintf"
+        "meta"
       ]
     },
     {
@@ -666,7 +674,7 @@
     },
     {
       "name": "json_annotation",
-      "version": "4.9.0",
+      "version": "4.10.0",
       "dependencies": [
         "meta"
       ]
@@ -704,7 +712,7 @@
     },
     {
       "name": "dbus",
-      "version": "0.7.11",
+      "version": "0.7.12",
       "dependencies": [
         "args",
         "ffi",
@@ -714,7 +722,7 @@
     },
     {
       "name": "cross_file",
-      "version": "0.3.4+2",
+      "version": "0.3.5+2",
       "dependencies": [
         "meta",
         "web"
@@ -722,14 +730,14 @@
     },
     {
       "name": "win32",
-      "version": "5.14.0",
+      "version": "5.15.0",
       "dependencies": [
         "ffi"
       ]
     },
     {
       "name": "ffi",
-      "version": "2.1.4",
+      "version": "2.2.0",
       "dependencies": []
     },
     {
@@ -741,7 +749,7 @@
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "version": "2.0.30",
+      "version": "2.0.33",
       "dependencies": [
         "flutter"
       ]
@@ -770,6 +778,15 @@
         "flutter",
         "meta",
         "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "vibration",
+      "version": "3.1.6",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface",
+        "vibration_platform_interface"
       ]
     },
     {
@@ -850,7 +867,7 @@
     },
     {
       "name": "source_span",
-      "version": "1.10.1",
+      "version": "1.10.2",
       "dependencies": [
         "collection",
         "path",
@@ -858,15 +875,8 @@
       ]
     },
     {
-      "name": "saslprep",
-      "version": "1.0.3",
-      "dependencies": [
-        "unorm_dart"
-      ]
-    },
-    {
       "name": "record_macos",
-      "version": "1.1.1",
+      "version": "1.2.1",
       "dependencies": [
         "flutter",
         "record_platform_interface"
@@ -874,7 +884,7 @@
     },
     {
       "name": "record_ios",
-      "version": "1.1.2",
+      "version": "1.2.0",
       "dependencies": [
         "flutter",
         "record_platform_interface"
@@ -882,7 +892,7 @@
     },
     {
       "name": "record_android",
-      "version": "1.4.2",
+      "version": "1.5.1",
       "dependencies": [
         "flutter",
         "record_platform_interface"
@@ -890,7 +900,7 @@
     },
     {
       "name": "record_linux",
-      "version": "1.2.1",
+      "version": "1.3.0",
       "dependencies": [
         "flutter",
         "record_platform_interface"
@@ -906,7 +916,7 @@
     },
     {
       "name": "record_web",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "dependencies": [
         "flutter",
         "flutter_web_plugins",
@@ -916,7 +926,7 @@
     },
     {
       "name": "record_platform_interface",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "dependencies": [
         "flutter",
         "plugin_platform_interface"
@@ -978,7 +988,7 @@
     },
     {
       "name": "pointer_interceptor_ios",
-      "version": "0.10.1",
+      "version": "0.10.1+1",
       "dependencies": [
         "flutter",
         "plugin_platform_interface",
@@ -1050,21 +1060,17 @@
       "dependencies": []
     },
     {
-      "name": "sprintf",
-      "version": "7.0.0",
-      "dependencies": []
-    },
-    {
-      "name": "path_provider_foundation",
-      "version": "2.4.2",
+      "name": "vibration_platform_interface",
+      "version": "0.1.1",
       "dependencies": [
+        "device_info_plus",
         "flutter",
-        "path_provider_platform_interface"
+        "plugin_platform_interface"
       ]
     },
     {
       "name": "path_provider_android",
-      "version": "2.2.18",
+      "version": "2.2.22",
       "dependencies": [
         "flutter",
         "path_provider_platform_interface"
@@ -1073,11 +1079,6 @@
     {
       "name": "term_glyph",
       "version": "1.2.2",
-      "dependencies": []
-    },
-    {
-      "name": "unorm_dart",
-      "version": "0.3.1+1",
       "dependencies": []
     },
     {
@@ -1095,10 +1096,18 @@
     },
     {
       "name": "petitparser",
-      "version": "7.0.1",
+      "version": "7.0.2",
       "dependencies": [
         "collection",
         "meta"
+      ]
+    },
+    {
+      "name": "path_provider_foundation",
+      "version": "2.5.1",
+      "dependencies": [
+        "flutter",
+        "path_provider_platform_interface"
       ]
     }
   ],

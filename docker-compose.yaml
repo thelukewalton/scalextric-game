@@ -2,13 +2,15 @@ services:
   db:
     ports:
       - 5432:5432
-    image: postgres
+    image: postgres:17
+    # image: postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - db:/var/lib/postgresql/data
+    restart: always
 
   dartbackend:
     build: .
@@ -21,6 +23,9 @@ services:
       MQTT_HOST: mosquitto
       DB_NAME: ${POSTGRES_DB}
       TABLE_NAME: ${TABLE_NAME}
+    volumes:
+      - ftp_data:/ftp/zebra
+    restart: always
 
   mosquitto:
     image: eclipse-mosquitto
@@ -34,7 +39,24 @@ services:
       - 9001:9001
     stdin_open: true
     tty: true
+    restart: always
+
+  ftp:
+    image: atmoz/sftp
+    container_name: sftp
+    ports:
+      - "22:22"
+    volumes:
+      - ftp_data:/home/zebra
+    command: ${FTP_USER}:${FTP_PASSWORD}:1000:1000
+    restart: always
 
 volumes:
+  ftp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./docker/ftp
+      # device: /home/scalextric/Desktop/dmo-scalextric/docker/ftp
   db:
-    external: true

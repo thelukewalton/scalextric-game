@@ -14,7 +14,7 @@ Connect RFID reader, android kiosk and laptop to the TP Link router using the **
 
 This is a git repo. I _may_ have made more changes since this was last updated. To check this, run `git pull` in the terminal (you will need internet connection). If there are changes:
 
-1. Run `docker compose down` and then `docker compose up --build`. This will rebuild the backend and restart the server.
+1. Run `docker compose down` and then `docker compose up --build -d`. This will rebuild the backend and restart the server.
 2. Rebuild the app. Hopefully, the apk in the top level directory will be the latest build, but if you need to rebuild it:
 
 ```bash
@@ -24,7 +24,7 @@ cp build/app/outputs/flutter-apk/app-release.apk ../../app.apk
 cd ../..
 ```
 
-To install this, run `adb install app.apk`
+To install this, run `adb install app.apk`.
 
 #### Copying files to KC50
 
@@ -94,6 +94,12 @@ Create IOT configuration:
 10. In the interface Configuration, set `Tag Data Interface 1` and `Management Events Interface` to be the name of the configuration you just created.
 11. Navigate to Communication -> Zebra IoT Connector -> Connection. Disable Autoconnect, and then click connect. You may have to enter the password again.
 
+## FS Camera
+
+The camera should be using IP address 192.168.0.106. This will save images into an FTP server which is hosted within docker. This FTP server saves files onto the linux laptop directory /home/scalextric/Desktop/dmo-scalextric/docker/ftp. The app will show whatever jpg image is placed into that directory.
+
+If images are not appearing: first ensure the camera is visible on the network - using the linux laptop navigate to its IP address in the browser. If the camera is connected, check if it is alerting to FTP failing. If that is the case, most often the issue is due to permissions on the folder. Ensure the user has read and write access to the folder where images are saved.
+
 ## Docker
 
 ```
@@ -110,7 +116,7 @@ docker compose up --build
 
 You should only need to build the image on the first run on a new machine, or when changes have been made to the backend.
 
-On the first run, you will need to send a GET request to the `/setup` endpoint. This will initialize the database.
+On the first run, you will need to send a GET request to the `/setup` endpoint. This will initialize the database. If you think you already have a database, this will delete it.
 
 ```curl
 GET http://localhost:13000/setup

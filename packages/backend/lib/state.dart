@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dart_server/ftp.dart';
 import 'package:dart_server/models/rfid_response.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:postgres/postgres.dart';
@@ -25,6 +26,7 @@ late MqttServerClient client;
 WebSocket? wss;
 bool rfidReaderStarted = false;
 Status? serverStatusGot;
+int ftpDelayTimeMS = 10;
 
 void reset() {
   users = [];
@@ -36,6 +38,7 @@ void reset() {
   raceStartTime = null;
   raceStartTimeServer = null;
   reactionTime = {};
+  cleanupOldImages();
 }
 
 class TopValues {

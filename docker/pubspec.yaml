@@ -4,5 +4,5 @@ environment:
   sdk: ^3.7.2
 
 workspace:
-  - backend
-  - shared
+  - packages/backend
+  - packages/shared

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scalextric/components/passcode.dart';
 import 'package:scalextric/pages/leaderboard_page.dart';
 import 'package:scalextric/pages/settings/game_settings_page.dart';
 import 'package:scalextric/pages/settings/technical_settings_page.dart';
@@ -17,23 +18,48 @@ class SettingsPage extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: Column(
+              spacing: 120,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ZetaButton.outlineSubtle(
-                  size: ZetaWidgetSize.large,
-                  label: 'Game Settings',
-                  onPressed: () => context.push(GameSettingsPage.name),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ZetaButton.outlineSubtle(
+                      size: ZetaWidgetSize.large,
+                      label: 'Game Settings',
+                      onPressed: () => context.push(GameSettingsPage.name),
+                    ),
+                    ZetaButton.outlineSubtle(
+                      size: ZetaWidgetSize.large,
+                      label: 'Technical Settings',
+                      onPressed: () => context.push(TechnicalSettingsPage.name),
+                    ),
+                    ZetaButton.outlineSubtle(
+                      size: ZetaWidgetSize.large,
+                      label: 'Tools',
+                      onPressed: () => context.push(ToolsPage.name),
+                    ),
+                  ],
                 ),
-                ZetaButton.outlineSubtle(
-                  size: ZetaWidgetSize.large,
-                  label: 'Technical Settings',
-                  onPressed: () => context.push(TechnicalSettingsPage.name),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ZetaButton.negative(
+                      label: 'Maintenance Mode',
+                      size: ZetaWidgetSize.large,
+                      onPressed: () => context.push('/maintenance'),
+                    ),
+                  ],
                 ),
-                ZetaButton.outlineSubtle(
-                  size: ZetaWidgetSize.large,
-                  label: 'Tools',
-                  onPressed: () => context.push(ToolsPage.name),
+                ZetaButton.text(
+                  label: 'Change settings passcode',
+                  onPressed: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (_) => const Passcode(setNew: true),
+                    );
+                  },
                 ),
               ],
             ),

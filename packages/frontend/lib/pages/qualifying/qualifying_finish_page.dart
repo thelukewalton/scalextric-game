@@ -22,16 +22,6 @@ class QualifyingFinishPage extends StatefulWidget {
 class _QualifyingFinishPageState extends State<QualifyingFinishPage> {
   final player = AudioPlayer();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     if (context.mounted && mounted && context.read<GameState>().settings.soundEffects) {
-  //       player.play(AssetSource('vroom.mp3'));
-  //     }
-  //   });
-  // }
-
   @override
   void dispose() {
     player.dispose();

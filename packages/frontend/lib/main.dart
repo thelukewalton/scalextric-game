@@ -10,6 +10,7 @@ import 'package:scalextric/pages/leaderboard_page.dart';
 import 'package:scalextric/pages/login/chose_mode_page.dart';
 import 'package:scalextric/pages/login/qualifying_login.dart';
 import 'package:scalextric/pages/login/race_login.dart';
+import 'package:scalextric/pages/maintenance_page.dart';
 import 'package:scalextric/pages/qualifying/practice_coutdown_page.dart';
 import 'package:scalextric/pages/qualifying/practice_instructions_page.dart';
 import 'package:scalextric/pages/qualifying/qualifying_finish_page.dart';
@@ -232,6 +233,18 @@ final router = GoRouter(
     GoRoute(
       path: RaceLoginPage.name,
       pageBuilder: (context, state) => wrapper(context, state, const RaceLoginPage(), padding: 0),
+    ),
+    GoRoute(
+      path: '/maintenance',
+      pageBuilder: (context, state) => CustomTransitionPage<void>(
+        key: state.pageKey,
+        transitionDuration: const Duration(milliseconds: 250),
+        transitionsBuilder:
+            (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+          return FadeTransition(opacity: CurveTween(curve: Curves.easeInOut).animate(animation), child: child);
+        },
+        child: const MaintenancePage(),
+      ),
     ),
   ],
 );

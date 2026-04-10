@@ -6,11 +6,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:scalextric/components/leaderboard.dart';
+import 'package:scalextric/components/passcode.dart';
 import 'package:scalextric/components/translucent_button.dart';
 import 'package:scalextric/pages/login/chose_mode_page.dart';
 import 'package:scalextric/pages/qualifying/qualifying_scan_page.dart';
 import 'package:scalextric/pages/race/race_scan_page.dart';
-import 'package:scalextric/pages/settings/settings_page.dart';
 import 'package:scalextric/state/dw_state.dart';
 import 'package:scalextric/state/game_state.dart';
 import 'package:scalextric/state/rest_state.dart';
@@ -57,8 +57,7 @@ class _LeaderBoardsPageState extends State<LeaderBoardsPage> {
               right: 10,
               child: GestureDetector(
                 onLongPress: () {
-                  Provider.of<DataWedgeState>(context, listen: false).clear();
-                  context.push(SettingsPage.name);
+                  showDialog<void>(context: context, builder: (_) => const Passcode());
                 },
                 child: Icon(
                   ZetaIcons.settings,

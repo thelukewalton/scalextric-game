@@ -95,6 +95,17 @@ class WebSocketState with ChangeNotifier {
       final carId = (obj as Map<String, dynamic>)['carId'] as String;
       final reactionTime = obj['reactionTime'] as int;
       reactionTimes[carId] = reactionTime;
+    } else if (message.contains('New Image')) {
+      try {
+        final obj = jsonDecode(message) as Map<String, dynamic>;
+        final imageData = obj['imageData'] as String;
+        gameState.imageLapCount = lapTimes.length < gameState.settings.practiceLaps
+            ? 'Practice lap ${lapTimes.length + 1}'
+            : 'Lap ${lapTimes.length - gameState.settings.practiceLaps + 1}';
+        gameState.currentImageP1 = base64Decode(imageData);
+      } catch (e) {
+        debugPrint('Error parsing message FTP Image: $message');
+      }
     } else {
       try {
         final obj = jsonDecode(message) as Map<String, dynamic>;
@@ -249,6 +260,7 @@ class WebSocketState with ChangeNotifier {
     }
     await restState.postLap(fastestLap!, overallTime, carId);
     await restState.fetchDriverStandings();
+    unawaited(restState.reset());
   }
 
   int get practiceLapsRemaining => gameState.settings.practiceLaps - lapTimes.length;
@@ -284,7 +296,7 @@ class WebSocketState with ChangeNotifier {
     return lapTimes.skip(gameState.settings.practiceLaps).fold(0, (sum, time) => sum + time);
   }
 
-  int get currentLap => restState.status == Status.race ? 0 : lapTimes.length - gameState.settings.practiceLaps;
+  int get currentLap => restState.status == Status.race ? 0 : lapTimes.length - gameState.settings.practiceLaps + 1;
 
   int getCurrentLapFromIndex(int index) {
     final carId = getCarIdFromIndex(index);
@@ -476,6 +488,7 @@ class WebSocketState with ChangeNotifier {
     _startTime = null;
     invalidatedLaps = [];
     reactionTimes = {};
+    notifyListeners();
   }
 
   @override

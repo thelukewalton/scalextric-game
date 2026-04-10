@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:dart_server/ftp.dart';
 import 'package:dart_server/models/rfid_response.dart';
 import 'package:dart_server/state.dart';
 import 'package:postgres/postgres.dart';
@@ -13,7 +14,6 @@ Future<void> startServer(Connection pool, shelf_router.Router app, HttpServer se
   serverSocket.transform(WebSocketTransformer()).listen((WebSocket ws) {
     print("WSS: Client connected");
     wss = ws;
-    rfidStart();
     ws.done.then((_) {
       print("WSS: Client disconnected");
       reset();
@@ -271,14 +271,22 @@ Future<void> startServer(Connection pool, shelf_router.Router app, HttpServer se
             "VALUES ('${users[0].name}', ${lapResponse.fastestLap},  '${users[0].id}', ${lapResponse.attempts}, ${lapResponse.overallTime}, '${carIds.first}') "
             "ON CONFLICT (id) "
             "DO UPDATE SET "
-            "lap_time = ${lapResponse.fastestLap}, "
+            "lap_time = CASE "
+            "  WHEN $tableName.lap_time IS NULL OR ${lapResponse.fastestLap} < $tableName.lap_time THEN ${lapResponse.fastestLap} "
+            "  ELSE $tableName.lap_time "
+            "END, "
             "attempts = ${lapResponse.attempts}, "
-            "car_id = ${carIds.first}, "
-            "overall_time = ${lapResponse.overallTime} ";
+            "car_id = '${carIds.first}', "
+            "overall_time = CASE "
+            "  WHEN $tableName.overall_time IS NULL OR ${lapResponse.overallTime} < $tableName.overall_time THEN ${lapResponse.overallTime} "
+            "  ELSE $tableName.overall_time "
+            "END ";
         await pool.execute(sql);
       }
       reset();
       rfidStop();
+      await cleanupOldImages();
+
       return Response.ok(
         jsonEncode({
           'message': "Successfully inserted entry into $tableName",
@@ -532,14 +540,57 @@ Future<void> startServer(Connection pool, shelf_router.Router app, HttpServer se
           "VALUES ($lapTime, '$userId', '$carId' ) "
           "ON CONFLICT (id) "
           "DO UPDATE SET "
-          "lap_time = $lapTime, "
+          "lap_time = CASE "
+          "  WHEN $tableName.lap_time IS NULL OR $lapTime < $tableName.lap_time THEN $lapTime "
+          "  ELSE $tableName.lap_time "
+          "END, "
           "car_id = '$carId'";
       await pool.execute(sql);
+
+      await cleanupOldImages();
 
       return Response.ok('Fastest lap for $userId set to $lapTime');
     } catch (err) {
       print('SERVER: Error: $err');
 
+      return Response.internalServerError(body: 'Internal Server Error: $err');
+    }
+  });
+  app.post('/ftpDelay', (Request request) async {
+    print('SERVER: POST /ftpDelay');
+
+    try {
+      final body = await request.readAsString();
+      final req = jsonDecode(body) as Map<String, dynamic>;
+      if (req['delayTimeMS'] == null || req['delayTimeMS'].isEmpty) {
+        return Response.badRequest(body: 'Invalid delay time');
+      }
+
+      final delayTimeMS = req['delayTimeMS'];
+
+      ftpDelayTimeMS = delayTimeMS;
+      reset();
+      return Response.ok('FTP delay time set to $delayTimeMS ms');
+    } catch (err) {
+      print('SERVER: Error: $err');
+
+      return Response.internalServerError(body: 'Internal Server Error: $err');
+    }
+  });
+
+  app.get('/lastImage', (Request request) async {
+    print('SERVER: GET /lastImage');
+    try {
+      if (lastImage != null && await lastImage!.exists()) {
+        final bytes = await lastImage!.readAsBytes();
+        final contents = base64Encode(bytes);
+
+        return Response.ok(jsonEncode({'image': contents}));
+      } else {
+        return Response.notFound('No image available');
+      }
+    } catch (err) {
+      print('SERVER: Error: $err');
       return Response.internalServerError(body: 'Internal Server Error: $err');
     }
   });

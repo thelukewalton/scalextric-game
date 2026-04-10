@@ -20,13 +20,15 @@ const defaultRaceLights = 4;
 const defaultScannedThingName = 'badge';
 const defaultRaceMode = 'QUALIFYING';
 const defaultMinLapTime = 3; // In seconds
+const defaultPasscode = 1234;
 
 /// How long to show the finish screen
 const defaultFinishPageDuration = 60000; // In milliseconds
 
 const defaultRfidToggleable = false;
-const defaultUseBarcodesForUsers = false;
+const defaultUseBarcodesForUsers = true;
 const defaultSoundEffects = false;
+const defaultUseFSCamera = true;
 
 // Key for the shared preferences / JSON file
 const serverUrlKey = 'serverUrl';
@@ -52,3 +54,5 @@ const carImageKey = 'carImage';
 const secondCarImageKey = 'secondCarImage';
 const trackImageKey = 'trackImage';
 const brandImageKey = 'brandImage';
+const passcodeKey = 'passcode';
+const useFSCameraKey = 'useFSCamera';

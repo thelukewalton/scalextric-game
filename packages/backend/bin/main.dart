@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dart_server/db.dart';
+import 'package:dart_server/ftp.dart';
 import 'package:dart_server/mqtt.dart';
 import 'package:dart_server/server.dart';
 import 'package:dart_server/state.dart';
@@ -8,6 +9,8 @@ import 'package:dotenv/dotenv.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
+import 'package:watcher/watcher.dart';
+import 'package:path/path.dart' as p;
 
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -21,8 +24,8 @@ Future<void> main() async {
   final dbName = env['DB_NAME'] ?? '';
   final serverPort = int.tryParse(env['SERVER_PORT'] ?? '3000') ?? 3000;
 
-  final mqttUserName = 'zebra';
-  final mqttPassword = '';
+  final mqttUserName = env['MQTT_USERNAME'] ?? '';
+  final mqttPassword = env['MQTT_PASSWORD'] ?? '';
   final mqttHost = env['MQTT_HOST'] ?? 'mosquitto';
   tableName = env['TABLE_NAME'] ?? 'zebra';
 
@@ -53,6 +56,16 @@ Future<void> main() async {
   print("WSS: running on ws://${serverSocket.address.host}:${serverSocket.port}");
 
   startServer(dbConnection, app, serverSocket);
+
+  // Start file watcher for FTP uploads
+  final watcher = DirectoryWatcher('/ftp/zebra');
+  watcher.events.listen((event) {
+    if (event.type == ChangeType.ADD) {
+      final filename = p.basename(event.path);
+      print('FTP: New file uploaded: $filename');
+      processFile(event.path);
+    }
+  });
 }
 
 class MyHttpOverrides extends HttpOverrides {

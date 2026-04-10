@@ -11,8 +11,8 @@ class QualifyingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 6, child: const LapCounter().paddingTop(90).paddingBottom(34)),
-        const Expanded(flex: 7, child: LiveTiming()),
+        Expanded(flex: 6, child: const LapCounter(showImage: true).paddingTop(90).paddingBottom(34)),
+        Expanded(flex: 7, child: const LiveTiming().paddingTop(90)),
       ],
     );
   }
